@@ -2,6 +2,8 @@
 The project aims to update the metadata of the image files present in a directory by adding location and date information. This is achieved by mapping the file names to corresponding location and date information stored in a CSV file, and updating the image EXIF metadata with the corresponding values.
 
 The project first extracts location data `(lat, long)` using EXIF information stored in pictures from the camera roll, and aggregates this data based on location and time to create clusters of locations. This information is saved in a csv file that is then used to assign each of the untagged images (images without gps location data) to one (or none) of the clusters of locations, based on datetime. 
+![image](https://user-images.githubusercontent.com/45178011/230798645-497c65e0-4383-4dba-9443-62d4aa570409.png)
+
 
 ## Description
 This project provides a set of functions to map Exif data to GPS coordinates and timestamps for images in a directory. The project includes the following functions:

@@ -66,9 +66,18 @@ def map_images(path,
 ```
 
 ## Examples
-### Example 1: Mapping images
-python
-Copy code
+### Example 1: Creating an EXIF map
+```python
+from map_images import create_exif_map
+
+directory_path = 'path/to/images'
+exif_map = create_exif_map(directory_path=directory_path)
+print(exif_map)
+```
+In this example, we use the create_exif_map function to create a dictionary mapping each image file name in the path/to/images directory to its EXIF data. We print out the resulting dictionary using the print function. This exif map will be used in the next function `map_images` to assign location tags to images without them based on the timestamps.
+
+### Example 2: Mapping images
+```python
 from map_images import map_images
 
 path = 'path/to/images'
@@ -77,17 +86,9 @@ name_filters_l = ['.jpg', '.jpeg']
 location_mapping_csv = 'path/to/location/mapping.csv'
 
 map_images(path=path, output_image_path=output_image_path, name_filters_l=name_filters_l, location_mapping_csv=location_mapping_csv)
+```
 In this example, we use the map_images function to map location and time metadata to all images in the path/to/images directory. We save the mapped images to the path/to/output/images directory, and we filter images by the file extensions .jpg and .jpeg. We also specify the path to the location mapping CSV file, which is located at path/to/location/mapping.csv.
 
-### Example 2: Creating an EXIF map
-```python
-from map_images import create_exif_map
-
-directory_path = 'path/to/images'
-exif_map = create_exif_map(directory_path=directory_path)
-print(exif_map)
-```
-In this example, we use the create_exif_map function to create a dictionary mapping each image file name in the path/to/images directory to its EXIF data. We print out the resulting dictionary using the print function.
 
 ## Contributing
 Contributions to this project are welcome. To contribute, please follow these steps:

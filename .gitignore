@@ -1,0 +1,11 @@
+# Python-specific
+*.pyc
+__pycache__/
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Ignore all files in the data/ directory
+data/
+location_mapping.csv

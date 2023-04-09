@@ -5,6 +5,29 @@ The project aims to update the metadata of the image files present in a director
 ### Usage
 Explain how to use the project, including any relevant commands or arguments that need to be used. Provide examples of how to use the map_images and create_exif_map functions.
 
+#### create_exif_map function
+```python
+def create_exif_map(df, 
+                    location_column, 
+                    datetime_column, 
+                    lat_column = 'lat', 
+                    long_column = 'long'):
+    """
+    Creates a dictionary mapping location and date information to the format required for EXIF metadata.
+
+    Args:
+        df (pd.DataFrame): Pandas DataFrame containing the location and date information.
+        location_column (str): Name of the column containing the location data.
+        datetime_column (str): Name of the column containing the date data.
+        lat_column (str, optional): Name of the column containing the latitude data. Defaults to 'lat'.
+        long_column (str, optional): Name of the column containing the longitude data. Defaults to 'long'.
+
+    Returns:
+        dict: Dictionary containing the mapping data.
+    """
+    ```
+
+
 #### map_images function
 ```python
 def map_images(path,
@@ -25,27 +48,3 @@ def map_images(path,
         None
     """
 ```
-#### create_exif_map function
-```python
-
-python
-Copy code
-def create_exif_map(df, 
-                    location_column, 
-                    datetime_column, 
-                    lat_column = 'lat', 
-                    long_column = 'long'):
-    """
-    Creates a dictionary mapping location and date information to the format required for EXIF metadata.
-
-    Args:
-        df (pd.DataFrame): Pandas DataFrame containing the location and date information.
-        location_column (str): Name of the column containing the location data.
-        datetime_column (str): Name of the column containing the date data.
-        lat_column (str, optional): Name of the column containing the latitude data. Defaults to 'lat'.
-        long_column (str, optional): Name of the column containing the longitude data. Defaults to 'long'.
-
-    Returns:
-        dict: Dictionary containing the mapping data.
-    """
-    ```

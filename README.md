@@ -41,7 +41,7 @@ def create_exif_map(df,
     Returns:
         dict: Dictionary containing the mapping data.
     """
-    ```
+```
 
 
 #### map_images function

@@ -5,7 +5,7 @@ The project aims to update the metadata of the image files present in a director
 ### Usage
 Explain how to use the project, including any relevant commands or arguments that need to be used. Provide examples of how to use the map_images and create_exif_map functions.
 
-#### `map_images function`
+#### map_images function
 ```python
 def map_images(path,
                output_image_path,
@@ -25,7 +25,7 @@ def map_images(path,
         None
     """
 ```
-#### `create_exif_map function`
+#### create_exif_map function
 ```python
 
 python

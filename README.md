@@ -71,10 +71,14 @@ def map_images(path,
 
     Parameters:
     -----------
-    - path (str): the directory path containing images to be mapped
-    - output_image_path (str): the directory path where the mapped images will be saved
-    - name_filters_l (list of str, optional): a list of filename extensions to filter by, defaults to ['.jpg', '.jpeg']
-    - location_mapping_csv (str, optional): the path to a CSV file containing location mapping data, defaults to "location_mapping.csv"
+    - path : str
+        the directory path containing images to be mapped
+    - output_image_path : str
+        the directory path where the mapped images will be saved
+    - name_filters_l : list of str, optional 
+        a list of filename extensions to filter by, defaults to ['.jpg', '.jpeg']
+    - location_mapping_csv : str, optional 
+        the path to a CSV file containing location mapping data, defaults to "location_mapping.csv"
 
     Returns: 
     -----------

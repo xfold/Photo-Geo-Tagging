@@ -16,9 +16,9 @@ This project provides a set of functions to map Exif data to GPS coordinates and
 ### Installation
 
 1. Clone the repo.
-2. Install required packages with pip:
+2. Install required packages with pip
 
-### Usage
+## Usage
 Explain how to use the project, including any relevant commands or arguments that need to be used. Provide examples of how to use the map_images and create_exif_map functions.
 
 #### create_exif_map function

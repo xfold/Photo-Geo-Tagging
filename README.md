@@ -29,17 +29,27 @@ def create_exif_map(df,
                     lat_column = 'lat', 
                     long_column = 'long'):
     """
-    Creates a dictionary mapping location and date information to the format required for EXIF metadata.
+    This function takes a path to a directory containing image files and creates a CSV file with mapping information based on the GPS coordinates of the images. It also groups images that were taken in the same location within a certain time frame.
 
-    Args:
-        df (pd.DataFrame): Pandas DataFrame containing the location and date information.
-        location_column (str): Name of the column containing the location data.
-        datetime_column (str): Name of the column containing the date data.
-        lat_column (str, optional): Name of the column containing the latitude data. Defaults to 'lat'.
-        long_column (str, optional): Name of the column containing the longitude data. Defaults to 'long'.
+    Parameters:
+    -----------
+    path : str
+        Path to the directory containing image files
+    min_gps_threshold_similar : float
+        Maximum distance threshold in kilometers to consider two pictures taken at the same place
+    min_seconds_threshold_similar : float
+        Maximum time threshold in seconds to consider two pictures taken at the same place
+    output_exif_map : str, optional (default: 'location_map.csv')
+        Path to output CSV file with mapping information
+    name_filters_l : List[str], optional (default: ['.jpg'])
+        List of file extensions to consider when loading image files
+    copy_grouped_pics_path : str, optional (default: None)
+        Path to directory where grouped images should be saved as copies. If None, no copies are made.
 
     Returns:
-        dict: Dictionary containing the mapping data.
+    --------
+    df : Dataframe
+        df with with mapping information
     """
 ```
 
@@ -52,16 +62,22 @@ def map_images(path,
                location_mapping_csv = "location_mapping.csv",
               ):
     """
-    Maps location information from a CSV file to the EXIF metadata of images in a folder.
+    Maps GPS location and date metadata to images in a given directory.
 
-    Args:
-        path (str): Path to the folder containing the images.
-        output_image_path (str): Path to the output folder where the modified images will be saved.
-        name_filters_l (list, optional): List of image file extensions to include. Defaults to ['.jpg', '.jpeg'].
-        location_mapping_csv (str, optional): Path to the CSV file containing the location mapping data. Defaults to "location_mapping.csv".
+    Parameters:
+    -----------
+    - path (str): the directory path containing images to be mapped
+    - output_image_path (str): the directory path where the mapped images will be saved
+    - name_filters_l (list of str, optional): a list of filename extensions to filter by, defaults to ['.jpg', '.jpeg']
+    - location_mapping_csv (str, optional): the path to a CSV file containing location mapping data, defaults to "location_mapping.csv"
 
-    Returns:
-        None
+    Returns: 
+    -----------
+    None
+
+    This function iterates over all image files in the given directory, and maps GPS location and date metadata to each image
+    using data from the location_mapping_csv file. The modified images are saved in the specified output directory.
+
     """
 ```
 

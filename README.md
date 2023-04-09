@@ -1,6 +1,14 @@
 # Photo-Geo-Tagging
 The project aims to update the metadata of the image files present in a directory by adding location and date information. This is achieved by mapping the file names to corresponding location and date information stored in a CSV file, and updating the image EXIF metadata with the corresponding values.
 
+## Description
+
+This project provides a set of functions to map Exif data to GPS coordinates and timestamps for images in a directory. The project includes the following functions:
+
+- `map_images()`: given a directory path, loads all image files with specified file extensions, maps Exif data to GPS coordinates and timestamps using a CSV file as a reference, and writes new images with modified Exif data to a specified output directory. 
+- `create_exif_map()`: given a directory path and specified file extensions, extracts and aggregates Exif data for all image files in the directory into a CSV file.
+
+
 
 ### Usage
 Explain how to use the project, including any relevant commands or arguments that need to be used. Provide examples of how to use the map_images and create_exif_map functions.
@@ -48,3 +56,15 @@ def map_images(path,
         None
     """
 ```
+
+## Getting Started
+
+### Dependencies
+
+- Python 3.x
+- Required packages: `pandas`, `Pillow`, `piexif`
+
+### Installation
+
+1. Clone the repo.
+2. Install required packages with pip:

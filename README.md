@@ -6,6 +6,17 @@ This project provides a set of functions to map Exif data to GPS coordinates and
 - `create_exif_map()`: given a directory path and specified file extensions, extracts and aggregates Exif data for all image files in the directory into a CSV file.
 - `map_images()`: given a directory path, loads all image files with specified file extensions, maps Exif data to GPS coordinates and timestamps using a CSV file as a reference, and writes new images with modified Exif data to a specified output directory. 
 
+## Getting Started
+
+### Dependencies
+
+- Python 3.x
+- Required packages: `pandas`, `Pillow`, `piexif`
+
+### Installation
+
+1. Clone the repo.
+2. Install required packages with pip:
 
 ### Usage
 Explain how to use the project, including any relevant commands or arguments that need to be used. Provide examples of how to use the map_images and create_exif_map functions.
@@ -54,14 +65,31 @@ def map_images(path,
     """
 ```
 
-## Getting Started
+## Examples
+### Example 1: Mapping images
+python
+Copy code
+from map_images import map_images
 
-### Dependencies
+path = 'path/to/images'
+output_image_path = 'path/to/output/images'
+name_filters_l = ['.jpg', '.jpeg']
+location_mapping_csv = 'path/to/location/mapping.csv'
 
-- Python 3.x
-- Required packages: `pandas`, `Pillow`, `piexif`
+map_images(path=path, output_image_path=output_image_path, name_filters_l=name_filters_l, location_mapping_csv=location_mapping_csv)
+In this example, we use the map_images function to map location and time metadata to all images in the path/to/images directory. We save the mapped images to the path/to/output/images directory, and we filter images by the file extensions .jpg and .jpeg. We also specify the path to the location mapping CSV file, which is located at path/to/location/mapping.csv.
 
-### Installation
+### Example 2: Creating an EXIF map
+```python
+from map_images import create_exif_map
 
-1. Clone the repo.
-2. Install required packages with pip:
+directory_path = 'path/to/images'
+exif_map = create_exif_map(directory_path=directory_path)
+print(exif_map)
+```
+In this example, we use the create_exif_map function to create a dictionary mapping each image file name in the path/to/images directory to its EXIF data. We print out the resulting dictionary using the print function.
+
+## Contributing
+Contributions to this project are welcome. To contribute, please follow these steps:
+* Fork the repository
+* Create a new branch (git checkout -b feature/your-feature-name)

@@ -5,23 +5,94 @@ The project first extracts location data `(lat, long)` using EXIF information st
 ![image](https://user-images.githubusercontent.com/45178011/230798658-d8963113-7977-4327-84fa-140cbf696a5d.png)
 
 
+# ImageProcessor Class
+
+The `ImageProcessor` class is a Python class designed to simplify common image processing tasks related to file handling, listing, and EXIF data manipulation. This class provides methods to perform the following tasks:
+
+1. Extract filenames from full file paths.
+2. List picture files in a folder with specified file extensions.
+3. Extract datetime information from filenames based on a specified pattern.
+4. Clone an image, update its EXIF data with a new datetime, and save it.
+
+## Usage
+
+To use the `ImageProcessor` class, follow these steps:
+
+1. Import the class:
+
+```python
+   from image_processor import ImageProcessor
+```
+
+Create an instance of the ```ImageProcessor``` class
+```python
+processor = ImageProcessor()
+```
+2. Use the class methods to perform various image processing tasks.
+
+## Methods
+```get_filename_from_path(file_path: str) -> str```
+Extracts the filename from a full file path.
+Parameters:
+- ```file_path``` (str): The full file path.
+Returns:
+- ```str```: The extracted filename.
+
+```list_pic_files_in_folder(folder_path: str, filters: list = ['jpg', 'jpeg']) -> list```
+Lists picture files with specified file extensions in a folder.
+Parameters:
+- ```folder_path``` (str): The path to the folder.
+- ```filters``` (list): A list of file extensions to filter (default: ['jpg', 'jpeg']).
+Returns:
+- ```list```: A list of picture files in the folder.
+
+```extract_datetime_from_title(filename: str, filter_extensions: list = None) -> datetime.datetime```
+Extracts datetime information from a filename based on a specified pattern.
+Parameters
+- ```filename``` (str): The filename to extract datetime from.
+- ```filter_extensions``` (list): A list of file extensions to filter (default: ['jpg', 'jpeg']).
+Returns
+- ```datetime.datetime``` or ```None```: The extracted datetime object, or ```None``` if not found.
+
+```clone_and_save_with_exif(original_filename: str, output_filename: str, datetime_obj: datetime.datetime) -> None```
+Clones an image, updates its EXIF data with a new datetime, and saves it.
+Parameters:
+- ```original_filename``` (str): The path to the original image.
+- ```output_filename``` (str): The path to save the cloned image with modified EXIF data.
+- ```datetime_obj``` (datetime.datetime): The new datetime object for EXIF data.Example
+
+## Example
+Here's an example of how to use the ```ImageProcessor```
+
+```python
+from image_processor import ImageProcessor
+
+processor = ImageProcessor()
+
+# Define folder paths and filters
+folder_path = '/path/to/your/source_folder'
+folder_path_exif = '/path/to/your/output_folder'
+filters = ['jpg', 'jpeg']
+
+# Process images with EXIF data
+processor.process_images_with_exif(folder_path, folder_path_exif, filters)
+```
+
+
+
+
+# photo-geo-tagger
+
 
 ## Description
 This project provides a set of functions to map Exif data to GPS coordinates and timestamps for images in a directory. The project includes the following functions:
 - `create_exif_map()`: given a directory path and specified file extensions, extracts and aggregates Exif data for all image files in the directory into a CSV file.
 - `map_images()`: given a directory path, loads all image files with specified file extensions, maps Exif data to GPS coordinates and timestamps using a CSV file as a reference, and writes new images with modified Exif data to a specified output directory. 
 
-## Getting Started
-
-### Dependencies
+## Dependencies
 
 - Python 3.x
 - Required packages: `pandas`, `Pillow`, `piexif`
-
-### Installation
-
-1. Clone the repo.
-2. Install required packages with pip
 
 ## Usage
 Explain how to use the project, including any relevant commands or arguments that need to be used. Provide examples of how to use the map_images and create_exif_map functions.
@@ -115,8 +186,3 @@ map_images(path=path, output_image_path=output_image_path, name_filters_l=name_f
 ```
 In this example, we use the map_images function to map location and time metadata to all images in the path/to/images directory. We save the mapped images to the path/to/output/images directory, and we filter images by the file extensions .jpg and .jpeg. We also specify the path to the location mapping CSV file, which is located at path/to/location/mapping.csv.
 
-
-## Contributing
-Contributions to this project are welcome. To contribute, please follow these steps:
-* Fork the repository
-* Create a new branch (git checkout -b feature/your-feature-name)

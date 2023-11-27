@@ -28,11 +28,12 @@ Explain how to use the project, including any relevant commands or arguments tha
 
 #### create_exif_map function
 ```python
-def create_exif_map(df, 
-                    location_column, 
-                    datetime_column, 
-                    lat_column = 'lat', 
-                    long_column = 'long'):
+create_exif_map(camera_roll_example_path, 
+                min_gps_threshold_similar=3,
+                min_seconds_threshold_similar=1800, 
+                output_exif_map='location_mapping.csv',
+                name_filters_l=['.jpg', '.jpeg'],
+                copy_grouped_pics_path=None)
     """
     This function takes a path to a directory containing image files and creates a CSV file with mapping information based on the GPS coordinates of the images. It also groups images that were taken in the same location within a certain time frame.
 

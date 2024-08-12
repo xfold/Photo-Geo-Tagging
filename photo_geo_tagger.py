@@ -53,7 +53,8 @@ def create_exif_map(path: str,
         all_exifs.append( _get_exifs(img, path) )
 
     #sort them by date, form older to newer
-    all_exifs.sort(key= lambda x: x['datetime_original'])
+    if 'datetime_original' in all_exifs[0]:
+        all_exifs.sort(key= lambda x: x['datetime_original'])
 
     # find groups of pictures taken in the same place, based on the
     # gps position and the threshold `max_thr_kms`
@@ -90,6 +91,9 @@ def create_exif_map(path: str,
     # Create final grouped mapping
     df = pd.DataFrame(columns=['start', 'end', 'lat', 'long', 'n_pics'])
     for group in all_groups:
+        if(len(all_groups) == 1 and len(group) == 1):
+            print(f"No location file was generated, as there is no exif data in any of the images.")
+            return None
         print(f"Exploring group of {len(group)} elements..")
         starting_date = group[0]['datetime']
         ending_date = group[-1]['datetime']
@@ -107,7 +111,7 @@ def create_exif_map(path: str,
 def map_images(path,
             output_image_path,
             name_filters_l : list = ['.jpg', '.jpeg'],
-            location_mapping_csv = "location_mapping.csv",
+            location_mapping_csv = None#"location_mapping.csv",
             ):
 
     """

@@ -1,12 +1,7 @@
 import numpy as np
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.neighbors import NearestNeighbors
-
-import numpy as np
-import pandas as pd
-from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.neighbors import NearestNeighbors
+import json
 
 class EmbeddingRetriever:
     def __init__(self, embeddings_df):
@@ -30,14 +25,13 @@ class EmbeddingRetriever:
 
         # Get the top N similar embeddings above the threshold
         top_n_similar_indices = filtered_indices[:N]
-        top_n_similarities = similarities[top_n_similar_indices]
 
         # Create a list of (image_path, similarity, embedding) triplets
         similar_images = []
         for idx in top_n_similar_indices:
             similar_images.append((
                 self.embeddings_df.iloc[idx]['filepath'],
-                similarities[idx],
+                float(similarities[idx]),
                 self.embeddings_df.iloc[idx]['embedding']
             ))
 
@@ -56,7 +50,7 @@ class EmbeddingRetriever:
             if 1 - dist >= threshold:  # For cosine similarity interpretation
                 filtered_triplets.append((
                     self.embeddings_df.iloc[indices[0][i]]['filepath'],
-                    1 - dist,  # Convert distance to similarity
+                    float(1 - dist),  # Convert distance to similarity
                     self.embeddings_df.iloc[indices[0][i]]['embedding']
                 ))
 
@@ -87,18 +81,20 @@ class EmbeddingRetriever:
         else:
             raise ValueError("Invalid method specified. Use 'cosine' or 'nearest_neighbors'.")
         
-    def update_similar_images(self, method='cosine', N=10, threshold=0.95, output_file='similar_images.parquet'):
+    def update_similar_images(self, method='cosine', N=10, threshold=0.95, output_file='data/similar_images.parquet'):
         """Iterate over all images and update the DataFrame with similar images."""
         similar_images_list = []
         for i in range(len(self.embeddings_df)):
             similar_images = self.find_similar_embeddings(i, method=method, N=N, threshold=threshold)
             # Collect similar images for this index
-            similar_images_list.append(similar_images)
+            similar_images_list.append( similar_images )
 
         # Update DataFrame with similar images
         self.embeddings_df['similar_images'] = similar_images_list
+        self.embeddings_df['similar_images'] = self.embeddings_df['similar_images'].apply(lambda x: [k[0] for k in x])
+        self.embeddings_df['threshold'] = threshold
         # Save the updated DataFrame to a Parquet file
         self.embeddings_df.to_parquet(output_file, index=False)
-        print(f"Saved similar images in Parquet format to {self.embeddings_df}.")
+        print(f"Saved similar images in Parquet format to {output_file}.")
         return self.embeddings_df
 

@@ -5,6 +5,13 @@ The project first extracts location data `(lat, long)` using EXIF information st
 ![image](https://user-images.githubusercontent.com/45178011/230798658-d8963113-7977-4327-84fa-140cbf696a5d.png)
 
 
+# Identify similar images
+Given a folder with images, this project also allows you to identify potentially similar from within the folder and to aggreagte them. 
+This is done using `ImageEmbedder.py` (to create embeddings for each of the images) and  `EmbeddingRetriever.py` (used to retrieve similar embeddings using either cosine distance or an approximation). 
+The functions also return a dataframe with details about similar pictures.
+
+An example nb can be found in `notebooks/find_similar_pictures.ipynb`.
+
 # ImageProcessor Class
 
 The `ImageProcessor` class is a Python class designed to simplify common image processing tasks related to file handling, listing, and EXIF data manipulation. This class provides methods to perform the following tasks:
@@ -81,7 +88,7 @@ processor.process_images_with_exif(folder_path, folder_path_exif, filters)
 
 
 
-# photo-geo-tagger
+# Photo-geo-tagger
 
 
 ## Description

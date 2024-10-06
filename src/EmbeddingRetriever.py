@@ -1,11 +1,14 @@
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
+import os
 
 class EmbeddingRetriever:
     def __init__(self, embeddings_df):
         """Initialize with a DataFrame containing image file paths and embeddings."""
-        self.embeddings_df = embeddings_df
-        self.embeddings = np.vstack(embeddings_df['embedding'].values)  # Convert embeddings from DataFrame to NumPy array
+        # Standardize all file paths in the 'filepath' column
+        self.embeddings_df = embeddings_df.copy()
+        self.embeddings_df['filepath'] = self.embeddings_df['filepath'].apply(self.standardize_path)
+        self.embeddings = np.vstack(self.embeddings_df['embedding'].values)
 
     def cosine_similarity(self, index, threshold=0.7, N=5):
         """Calculate cosine similarity and retrieve similar embeddings."""
@@ -57,8 +60,34 @@ class EmbeddingRetriever:
 
         return filtered_triplets
 
+    def standardize_path(self, filepath: str) -> str:
+        """
+        Standardize the input file path to ensure consistency.
+
+        Args:
+            filepath (str): The file path to standardize.
+
+        Returns:
+            str: The standardized file path.
+        """
+        # Expand user home directory (e.g., '~' to '/home/user' or 'C:/Users/user')
+        filepath = os.path.expanduser(filepath)
+        
+        # Convert to an absolute path if it's relative
+        filepath = os.path.abspath(filepath)
+
+        # Normalize the path to remove redundant separators and resolve symbolic links
+        filepath = os.path.normpath(filepath)
+        
+        return filepath
+
     def find_similar_embeddings(self, input_value, method='cosine', N=10, threshold=0.95):
         """Retrieve similar embeddings based on the specified method."""
+        
+        # Standardize the path if the input is a string (i.e., filepath)
+        if isinstance(input_value, str):
+            input_value = self.standardize_path(input_value)
+        
         # Determine index from input value
         if isinstance(input_value, int):
             index = input_value  # If input is an index
@@ -78,7 +107,7 @@ class EmbeddingRetriever:
             return self.approximate_nearest_neighbors(index, N, threshold)
         else:
             raise ValueError("Invalid method specified. Use 'cosine' or 'nearest_neighbors'.")
-        
+   
     def update_similar_images(self, method='cosine', N=10, threshold=0.95, output_file='data/similar_images.parquet'):
         """Iterate over all images and update the DataFrame with similar images."""
         similar_images_list = []

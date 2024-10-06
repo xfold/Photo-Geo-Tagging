@@ -1,13 +1,10 @@
-from exif import Image
 import os
-import math
-from datetime import datetime, timedelta
-import geopy.distance
+from exif import Image
+from datetime import datetime
 from statistics import mean
 import pandas as pd
-import ast
 
-from helpers import _load_images, _get_exifs, _is_closer_than_n_kms, _is_in_time, _save_copy_pics, _get_lat_long_decimal, _dd2dms, _get_image_modified_data, _map_location_mapping
+from utils import _load_images, _get_exifs, _is_closer_than_n_kms, _is_in_time, _save_copy_pics, _get_lat_long_decimal, _dd2dms, _get_image_modified_data, _map_location_mapping
 
 
 def create_exif_map(path: str, 

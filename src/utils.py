@@ -1,10 +1,8 @@
 from exif import Image
 import os
-import math
-from datetime import datetime, timedelta
+from datetime import datetime
 import geopy.distance
 from statistics import mean
-import pandas as pd
 import ast
 
 def _load_images(path: str, name_filters_l : list = ['.jpg'] )->list: 

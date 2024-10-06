@@ -1,5 +1,5 @@
 import argparse
-from image_date_processor import ImageProcessor
+from src.ImageProcessor import ImageProcessor
 
 def main():
     parser = argparse.ArgumentParser(description='Process images with EXIF data.')

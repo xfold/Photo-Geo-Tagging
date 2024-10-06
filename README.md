@@ -7,6 +7,7 @@ The project first extracts location data `(lat, long)` using EXIF information st
 
 # Identify similar images
 Given a folder with images, this project also allows you to identify potentially similar from within the folder and to aggreagte them. 
+
 This is done using `ImageEmbedder.py` (to create embeddings for each of the images) and  `EmbeddingRetriever.py` (used to retrieve similar embeddings using either cosine distance or an approximation). 
 The functions also return a dataframe with details about similar pictures.
 

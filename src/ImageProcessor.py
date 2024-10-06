@@ -50,18 +50,37 @@ class ImageProcessor:
         if filter_extensions is None:
             filter_extensions = ['jpg', 'jpeg']
 
-        pattern = r'IMG-(\d{8})-WA\d{4}\.(' + '|'.join(filter_extensions) + ')'
-        match = re.search(pattern, filename, re.IGNORECASE)  # Case-insensitive match
-
-        if match:
-            date_str = match.group(1)
+        # Pattern for 'IMG-YYYYMMDD-WA####.extension'
+        pattern_img = r'IMG-(\d{8})-WA\d{4}\.(' + '|'.join(filter_extensions) + ')'
+        
+        # Pattern for 'WhatsApp Image YYYY-MM-DD at HH.MM.SS (optional_number).extension'
+        pattern_whatsapp = r'WhatsApp Image (\d{4})-(\d{2})-(\d{2}) at (\d{2})\.(\d{2})\.(\d{2})(?: \(\d+\))?\.(' + '|'.join(filter_extensions) + ')'
+    
+        # Try matching the IMG-YYYYMMDD-WA#### pattern first
+        match_img = re.search(pattern_img, filename, re.IGNORECASE)  # Case-insensitive match
+        if match_img:
+            date_str = match_img.group(1)
             try:
                 datetime_obj = datetime.datetime.strptime(date_str, '%Y%m%d')
                 return datetime_obj
             except ValueError:
                 return None
-        else:
-            return None
+
+        # Try matching the WhatsApp Image pattern
+        match_whatsapp = re.search(pattern_whatsapp, filename, re.IGNORECASE)
+        if match_whatsapp:
+            year, month, day, hour, minute, second = match_whatsapp.groups()[:6]
+            try:
+                datetime_obj = datetime.datetime(
+                    int(year), int(month), int(day),
+                    int(hour), int(minute), int(second)
+                )
+                return datetime_obj
+            except ValueError:
+                return None
+
+        # If no matches found, return None
+        return None
 
     def clone_and_save_with_exif(self, original_filename: str, output_filename: str, datetime_obj: datetime.datetime) -> None:
         """
